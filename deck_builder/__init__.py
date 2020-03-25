@@ -1,4 +1,6 @@
-import sys        
+import sys, requests
+import pandas as pd
+        
 class Deck:
     """Manage deck statistics here"""
     def __init__(self, deck_name='', export_json=None):
@@ -36,7 +38,7 @@ class Deck:
         return self.cards[mask]
     
     def shuffle(self):
-        return self.cards.sample(frac=1)
+        return self.cards.sample(frac=1).reset_index(drop=True)
     
     def export_json(self):
         card_json = self.cards.to_json()
