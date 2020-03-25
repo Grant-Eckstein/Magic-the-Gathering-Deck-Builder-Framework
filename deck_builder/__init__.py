@@ -1,12 +1,13 @@
-import sys, requests
-import pandas as pd
-
+import sys        
 class Deck:
     """Manage deck statistics here"""
-    def __init__(self, deck_name=''):
-        self.cards = pd.DataFrame()
-#         self.side_board = CardCollection()
-        self.side_board = pd.DataFrame()
+    def __init__(self, deck_name='', export_json=None):
+        if export_json != None:
+            self.cards = pd.read_json(export_json['cards'])
+            self.side_board = pd.read_json(export_json['side_board'])
+        else:
+            self.cards = pd.DataFrame()
+            self.side_board = pd.DataFrame()
         self.name=deck_name
         
     def lookup_card_by_name(self, card_name):
@@ -41,7 +42,4 @@ class Deck:
         card_json = self.cards.to_json()
         side_board_json = self.side_board.to_json()
         return {'cards': card_json, 'side_board': side_board_json}
-    
-    def import_json(self, export_dict):
-        self.cards = pd.read_json(export_dict['cards'])
-        self.side_board = pd.read_json(export_dict['side_board'])
+        
